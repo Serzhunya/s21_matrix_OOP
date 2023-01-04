@@ -5,18 +5,16 @@
 class S21Matrix {
  private:
   // Attributes
-  int rows_;
-  int cols_;
-  double** matrix_;  // Pointer to the memory where the matrix is allocated
+  int _rows;
+  int _cols;
+  double* _matrix;  // Pointer to the memory where the matrix is allocated
 
  public:
   S21Matrix();   // Default constructor
   ~S21Matrix();  // Destructor
-  S21Matrix(int rows, int cols) {
-    rows_ = rows;
-    cols_ = cols;
-  }
-  S21Matrix(const S21Matrix& other) {}
+  S21Matrix(int rows, int cols);
+  S21Matrix(const S21Matrix& other);
+  S21Matrix(S21Matrix&& other);
 
   S21Matrix(S21Matrix&& other) {}
   bool EqMatrix(const S21Matrix& other);
