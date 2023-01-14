@@ -1,5 +1,7 @@
 #ifndef __S21MATRIXOOP_H__
 #define __S21MATRIXOOP_H__
+
+#include <cstring>
 #include <iostream>  // директива препроцессора
 
 class S21Matrix {
