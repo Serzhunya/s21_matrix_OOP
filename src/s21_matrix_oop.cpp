@@ -53,7 +53,31 @@ bool S21Matrix::EqMatrix(const S21Matrix& other) {
   return true;
 }
 
-// создать функцию setIndex
+void S21Matrix::SumMatrix(const S21Matrix& other) {
+  if (_rows != other._rows || _cols != other._cols) {
+    throw std::exception();
+  } else {
+    for (int i = 0; i < _cols * _rows; i++) {
+      _matrix[i] += other._matrix[i];
+    }
+  }
+}
+
+void S21Matrix::SubMatrix(const S21Matrix& other) {
+  if (_rows != other._rows || _cols != other._cols) {
+    throw std::exception();
+  } else {
+    for (int i = 0; i < _cols * _rows; i++) {
+      _matrix[i] -= other._matrix[i];
+    }
+  }
+}
+
+void S21Matrix::MulNumber(const double num) {
+  for (int i = 0; i < _cols * _rows; i++) {
+    _matrix[i] *= num;
+  }
+}
 
 int S21Matrix::getIndex(int x, int y) { return y * _cols + x; }
 
@@ -82,18 +106,28 @@ int main() {
 
   // std::cout << index;
 
-  other.setValue(0, 0, 3.4553);
+  other.setValue(0, 0, 1);
+  other.setValue(0, 1, 2);
 
-  my.setValue(0, 0, 3.4553);
+  my.setValue(0, 0, 3);
   my.setValue(0, 1, 5);
 
-  S21Matrix aboba(my);
-
-  other.printm();
-  std::cout << "\n";
   my.printm();
-
-  bool a = my.EqMatrix(other);
   std::cout << "\n";
-  std::cout << a;
+  other.printm();
+
+  // bool a = my.EqMatrix(other);
+  std::cout << "\n";
+  // std::cout << a;
+
+  // std::cout << "\n";
+  // my.SumMatrix(other);
+  // my.printm();
+
+  std::cout << "\n";
+  // my.SubMatrix(other);
+  // my.printm();
+
+  my.MulNumber(2);
+  my.printm();
 }
