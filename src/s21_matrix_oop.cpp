@@ -26,8 +26,14 @@ S21Matrix::S21Matrix(S21Matrix&& other) {
   _matrix = other._matrix;
   other._rows = 0;
   other._cols = 0;
-  other._matrix = NULL;
+  other._matrix = nullptr;
 }
 
 // Деструктор
-S21Matrix::~S21Matrix() {}
+S21Matrix::~S21Matrix() {
+  if (_matrix) {
+    delete[] _matrix;
+    _rows = 0;
+    _cols = 0;
+  }
+}
