@@ -3,20 +3,23 @@
 S21Matrix::S21Matrix() {
   _rows = 3;
   _cols = 3;
-  _matrix = new double[_rows * _cols]();
+  _matrix = new double*[_rows]();
+  for (int i = 0; i < _rows; i++) {
+    _matrix[i] = new double[_cols]();
+  }
 }
 
 S21Matrix::S21Matrix(int rows, int cols)
     : _rows(rows),
       _cols(cols),
       _matrix(nullptr) {  // инициализация по умолчанию
-  _matrix = new double[_rows * _cols]();
+  *_matrix = new double[_rows * _cols]();
 }
 
 // Конструктор копирования
 S21Matrix::S21Matrix(const S21Matrix& other)
     : _rows(other._rows), _cols(other._cols) {
-  _matrix = new double[_rows * _cols]();
+  *_matrix = new double[_rows * _cols]();
   std::memcpy(_matrix, other._matrix,
               other._rows * other._cols * sizeof(double));
 }
@@ -57,8 +60,10 @@ void S21Matrix::SumMatrix(const S21Matrix& other) {
   if (_rows != other._rows || _cols != other._cols) {
     throw std::exception();
   } else {
-    for (int i = 0; i < _cols * _rows; i++) {
-      _matrix[i] += other._matrix[i];
+    for (int i = 0; i < _rows; i++) {
+      for (int y = 0; y < _cols; y++) {
+        *_matrix[i] += other._matrix[i][y];
+      }
     }
   }
 }
@@ -67,27 +72,48 @@ void S21Matrix::SubMatrix(const S21Matrix& other) {
   if (_rows != other._rows || _cols != other._cols) {
     throw std::exception();
   } else {
-    for (int i = 0; i < _cols * _rows; i++) {
-      _matrix[i] -= other._matrix[i];
+    for (int i = 0; i < _rows; i++) {
+      for (int y = 0; y < _cols; y++) {
+        *_matrix[i] -= other._matrix[i][y];
+      }
     }
   }
 }
 
 void S21Matrix::MulNumber(const double num) {
-  for (int i = 0; i < _cols * _rows; i++) {
-    _matrix[i] *= num;
+  for (int i = 0; i < _rows; i++) {
+    for (int y = 0; y < _cols; y++) {
+      *_matrix[i] *= num;
+    }
   }
 }
+
+// void S21Matrix::MulMatrix(const S21Matrix& other) {
+//   if (_rows > 0 && other._rows > 0 && _cols > 0 && other._cols) {
+//     if ((_rows == other._cols) || (_cols == other._rows)) {
+//       S21Matrix matrix_mul = S21Matrix(_rows, other._cols);
+//       for (int i = 0; i < _rows; i++) {
+//         for (int y = 0; y < other._cols; y++) {
+//           matrix_mul._matrix[i][y] = 0;
+//           for (int k = 0; k < other._rows; k++) {
+//             matrix_mul._matrix[i][y] = matrix_mul._matrix[i][y] +
+//                                        (_matrix[i][k] * other._matrix[k][y]);
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 int S21Matrix::getIndex(int x, int y) { return y * _cols + x; }
 
 void S21Matrix::setValue(int x, int y, double value) {
-  _matrix[getIndex(x, y)] = value;
+  _matrix[getIndex(x, y)] = &value;
 }
 
 int S21Matrix::getRows() { return _rows; }
 int S21Matrix::getCols() { return _cols; }
-double* S21Matrix::getMatrix() { return _matrix; }
+double** S21Matrix::getMatrix() { return _matrix; }
 
 void S21Matrix::printm() {
   for (int i = 0; i < this->getRows() * this->getCols(); i++) {
@@ -98,36 +124,37 @@ void S21Matrix::printm() {
 // bool S21Matrix::SumMatrix(const S21Matrix& other) {}
 
 int main() {
-  S21Matrix other(3, 3);
-  S21Matrix my(3, 3);
+  S21Matrix aboba;
+  // S21Matrix other(3, 3);
+  // S21Matrix my(3, 3);
   // int index = my.getIndex(4, 2);
 
   // other.setValue(0, 0, 3.4553);
 
   // std::cout << index;
 
-  other.setValue(0, 0, 1);
-  other.setValue(0, 1, 2);
+  // other.setValue(0, 0, 1);
+  // other.setValue(0, 1, 2);
 
-  my.setValue(0, 0, 3);
-  my.setValue(0, 1, 5);
+  // my.setValue(0, 0, 3);
+  // my.setValue(0, 1, 5);
 
-  my.printm();
-  std::cout << "\n";
-  other.printm();
+  // my.printm();
+  // std::cout << "\n";
+  // other.printm();
 
-  // bool a = my.EqMatrix(other);
-  std::cout << "\n";
-  // std::cout << a;
+  // // bool a = my.EqMatrix(other);
+  // std::cout << "\n";
+  // // std::cout << a;
+
+  // // std::cout << "\n";
+  // // my.SumMatrix(other);
+  // // my.printm();
 
   // std::cout << "\n";
-  // my.SumMatrix(other);
-  // my.printm();
+  // // my.SubMatrix(other);
+  // // my.printm();
 
-  std::cout << "\n";
-  // my.SubMatrix(other);
-  // my.printm();
-
-  my.MulNumber(2);
-  my.printm();
+  // my.MulNumber(2);
+  aboba.printm();
 }

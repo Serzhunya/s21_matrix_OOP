@@ -9,7 +9,7 @@ class S21Matrix {
   // Attributes
   int _rows;
   int _cols;
-  double* _matrix;  // Pointer to the memory where the matrix is allocated
+  double** _matrix;  // Pointer to the memory where the matrix is allocated
 
  public:
   S21Matrix();   // Default constructor
@@ -22,14 +22,14 @@ class S21Matrix {
 
   int getRows();
   int getCols();
-  double* getMatrix();
+  double** getMatrix();
   void setValue(int x, int y, double value);
   int getIndex(int x, int y);
-  bool EqMatrix(const S21Matrix& other);
-  void SumMatrix(const S21Matrix& other);
-  void SubMatrix(const S21Matrix& other);
-  void MulNumber(const double num);
-  void MulMatrix(const S21Matrix& other);
+  bool EqMatrix(const S21Matrix& other);   // +
+  void SumMatrix(const S21Matrix& other);  // +
+  void SubMatrix(const S21Matrix& other);  // +
+  void MulNumber(const double num);        // +
+  void MulMatrix(const S21Matrix& other);  // сделать
   S21Matrix Transpose();
   S21Matrix CalcComplements();
   double Determinant();
