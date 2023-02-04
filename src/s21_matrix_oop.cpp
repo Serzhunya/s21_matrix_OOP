@@ -106,8 +106,32 @@ void S21Matrix::MulMatrix(const S21Matrix& other) {
       }
     }
   }
-  *this = std::move(matrix_mul);
+  // *this = std::move(matrix_mul);
 }
+
+S21Matrix S21Matrix::Transpose() {
+  S21Matrix result(_cols, _rows);
+  for (int i = 0; i < _rows; i++) {
+    for (int j = 0; j < _cols; j++) {
+      result._matrix[j][i] = _matrix[i][j];
+    }
+  }
+  return result;
+}
+
+S21Matrix S21Matrix::CalcComplements() {
+  if (_rows != _cols) {
+    throw std::exception();
+  }
+}
+
+double S21Matrix::Determinant() {
+  if (_rows != _cols) {
+    throw std::exception();
+  }
+}
+
+S21Matrix S21Matrix::InverseMatrix() {}
 
 void S21Matrix::setValue(int x, int y, double value) { _matrix[x][y] = value; }
 
@@ -127,13 +151,21 @@ void S21Matrix::printm() {
 }
 
 int main() {
-  S21Matrix matrix;
   // S21Matrix other(3, 3);
-  S21Matrix my(4, 4);
+  S21Matrix my(3, 3);
 
-  my.setValue(0, 0, 3);
+  my.setValue(0, 0, 1);
+  my.setValue(0, 1, 2);
+  my.setValue(0, 2, 3);
 
-  my.setValue(3, 2, 5);
+  my.setValue(1, 0, 4);
+  my.setValue(1, 1, 5);
+  my.setValue(1, 2, 6);
+
+  my.setValue(2, 0, 7);
+  my.setValue(2, 1, 8);
+  my.setValue(2, 2, 9);
+  S21Matrix other = my.Transpose();
 
   // std::cout << index;
 
@@ -161,4 +193,6 @@ int main() {
 
   // my.MulNumber(2);
   my.printm();
+  std::cout << "\n";
+  other.printm();
 }
