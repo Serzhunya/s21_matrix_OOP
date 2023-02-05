@@ -1,15 +1,17 @@
 #ifndef __S21MATRIXOOP_H__
 #define __S21MATRIXOOP_H__
 
+#include <math.h>
+
 #include <cstring>
 #include <iostream>  // директива препроцессора
 
 class S21Matrix {
  private:
   // Attributes
-  int _rows;
-  int _cols;
-  double** _matrix;  // Pointer to the memory where the matrix is allocated
+  int rows_;
+  int cols_;
+  double** matrix_;  // Pointer to the memory where the matrix is allocated
 
  public:
   S21Matrix();   // Default constructor
@@ -30,9 +32,14 @@ class S21Matrix {
   void MulNumber(const double num);        // +
   void MulMatrix(const S21Matrix& other);  // сделать
   S21Matrix Transpose();                   // + (работает)
-  S21Matrix CalcComplements();             // сделать
-  double Determinant();                    // сделать
+  S21Matrix CalcComplements();             // + (работает)
+  double Determinant();                    // + (работает)
   S21Matrix InverseMatrix();               // сделать
+
+  S21Matrix& operator=(const S21Matrix& other);
+  void copy_matrix(const S21Matrix& other);
+  void delete_matrix();
+  void create_matrix();
 };
 
 #endif
